@@ -14,13 +14,9 @@ Adalah sebuah board game dengan 2 player dengan papan 3x3. Player ditujukan untu
 
 # Install
 
-## Install dependencies
+Use `pnpm install`
 
-Use `pnpm install
-
-## Jalankan
-
-Use `pnpm run dev
+Use `pnpm run dev`
 
 # Screenshots
 
