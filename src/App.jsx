@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [move, setMove] = useState(0);
   const kotakSaatIni = history[move];
   const xIsNext = move % 2 === 0;
-
+  const [mode, setMode] = useState("lokal");
   const [skorX, setSkorX] = useState(0);
   const [skorO, setSkorO] = useState(0);
 
@@ -44,7 +44,7 @@ export default function Game() {
           onClick={() => {
             handleJumpTo(i);
           }}
-          disabled={pem !== "undefined"}
+          disabled={pem !== undefined}
         >
           {deskripsi}
         </button>
@@ -54,6 +54,20 @@ export default function Game() {
 
   return (
     <div className="game">
+      <div className="game-mode">
+        <button
+          onClick={() => setMode("lokal")}
+          className={mode === "lokal" ? "active" : ""}
+        >
+          Lokal
+        </button>
+        <button
+          onClick={() => setMode("ai")}
+          className={mode === "ai" ? "active" : ""}
+        >
+          VS Komputer
+        </button>
+      </div>
       <div className="game-papan">
         <Papan
           kotaks={kotakSaatIni}
@@ -61,6 +75,7 @@ export default function Game() {
           onPlay={handlePlay}
           skorX={skorX}
           skorO={skorO}
+          mode={mode}
         />
       </div>
       <div className="game-history">
@@ -78,13 +93,35 @@ export default function Game() {
   );
 }
 
-function Papan({ kotaks, xIsNext, onPlay, skorX, skorO }) {
+function Papan({ kotaks, xIsNext, onPlay, skorX, skorO, mode }) {
   function handleClick(i) {
     if (kotaks[i] || cariPemenang(kotaks)) return;
+    if (mode === "ai" && !xIsNext) return;
     const kotaksBaru = kotaks.slice();
     kotaksBaru[i] = xIsNext ? "X" : "O";
     onPlay(kotaksBaru);
   }
+
+  function aiRandom(kotakSekarang) {
+    const kotakKosong = [];
+    for (let i = 0; i < kotakSekarang.length; i++) {
+      if (kotakSekarang[i] === null) kotakKosong.push(i);
+    }
+
+    if (kotakKosong.length === 0) return;
+
+    const acakAI = Math.floor(Math.random() * kotakKosong.length);
+    const indexAI = kotakKosong[acakAI];
+    const kotaksBaru = kotakSekarang.slice();
+    kotaksBaru[indexAI] = "O";
+    onPlay(kotaksBaru);
+  }
+
+  useEffect(() => {
+    if (mode === "ai" && !xIsNext && !cariPemenang(kotaks)) {
+      aiRandom(kotaks);
+    }
+  }, [kotaks, xIsNext, mode]);
 
   const pemenang = cariPemenang(kotaks);
   const draw = !pemenang && kotaks.every((e) => e !== null);
