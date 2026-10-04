@@ -43,10 +43,12 @@
   box-shadow: 0px 10px #102129;
   cursor: pointer;
   font-weight: bold;
+  text-shadow: #31c3be 0px 0px 10px;
 }
 
 .tombol.o {
   color: #f2b237;
+  text-shadow: #f2b237 0px 0px 10px;
 }
 
 .tombol:active {
@@ -54,19 +56,41 @@
   transform: translateY(4px);
 }
 
+.papan-skor {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.skor.x {
+  color: #31c3be;
+}
+
+.skor.o {
+  color: #f2b237;
+}
+
 /* game-history */
 .game-history {
+  margin-top: -15px;
+}
+.game-history ol {
   color: #a8bec9;
   font-size: 30px;
+  min-height: 500px;
   max-height: 500px;
   overflow-y: scroll;
-  scrollbar-width: thin;
-  padding-left: 30px;
+  padding-left: 40px;
   padding-right: 30px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #a8bec9 #1f3540;
 }
 
 .game-history ol li button {
-  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: inherit;
   color: inherit;
   background-color: #1f3540;
@@ -79,4 +103,35 @@
 .game-history ol li button:active {
   box-shadow: 0px 0px;
   transform: translateY(4px);
+}
+
+.game-control {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.game-control button {
+  margin-top: 40px;
+  padding: 10px;
+  border: 0;
+  border-radius: 10%;
+  box-shadow: 0px 10px #102129;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.game-control button:active {
+  box-shadow: 0px 0px;
+  transform: translateY(4px);
+}
+
+.game-control .btn-reset {
+  background-color: red;
+  color: white;
+}
+
+.game-control .btn-next {
+  background-color: green;
+  color: white;
 }

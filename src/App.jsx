@@ -6,7 +6,17 @@ export default function Game() {
   const kotakSaatIni = history[move];
   const xIsNext = move % 2 === 0;
 
+  const [skorX, setSkorX] = useState(0);
+  const [skorO, setSkorO] = useState(0);
+
   function handlePlay(kotaksBaru) {
+    const pemenang = cariPemenang(kotaksBaru);
+    if (pemenang === "X") {
+      setSkorX((e) => e + 1);
+    } else if (pemenang === "O") {
+      setSkorO((e) => e + 1);
+    }
+
     const historyBaru = [...history.slice(0, move + 1), kotaksBaru];
     setHistory(historyBaru);
     setMove(historyBaru.length - 1);
@@ -16,7 +26,17 @@ export default function Game() {
     setMove(i);
   }
 
+  function handleReset() {
+    location.reload();
+  }
+
+  function handleNext() {
+    setHistory([Array(9).fill(null)]);
+    setMove(0);
+  }
+
   const listHistory = history.map((e, i) => {
+    const pem = cariPemenang(kotakSaatIni);
     let deskripsi = i > 0 ? `Lompat ke #${i}` : "Permainan dimulai";
     return (
       <li key={i}>
@@ -24,6 +44,7 @@ export default function Game() {
           onClick={() => {
             handleJumpTo(i);
           }}
+          disabled={pem !== "undefined"}
         >
           {deskripsi}
         </button>
@@ -34,16 +55,30 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-papan">
-        <Papan kotaks={kotakSaatIni} xIsNext={xIsNext} onPlay={handlePlay} />
+        <Papan
+          kotaks={kotakSaatIni}
+          xIsNext={xIsNext}
+          onPlay={handlePlay}
+          skorX={skorX}
+          skorO={skorO}
+        />
       </div>
       <div className="game-history">
         <ol>{listHistory}</ol>
+        <div className="game-control">
+          <button className="btn-reset" onClick={handleReset}>
+            Ulangi
+          </button>
+          <button className="btn-next" onClick={handleNext}>
+            Lanjut
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-function Papan({ kotaks, xIsNext, onPlay }) {
+function Papan({ kotaks, xIsNext, onPlay, skorX, skorO }) {
   function handleClick(i) {
     if (kotaks[i] || cariPemenang(kotaks)) return;
     const kotaksBaru = kotaks.slice();
@@ -52,9 +87,15 @@ function Papan({ kotaks, xIsNext, onPlay }) {
   }
 
   const pemenang = cariPemenang(kotaks);
-  let status = pemenang
-    ? `${pemenang} MENANG`
-    : (xIsNext ? "X" : "O") + " Gerak";
+  const draw = !pemenang && kotaks.every((e) => e !== null);
+  let status;
+  if (pemenang) {
+    status = `${pemenang} MENANG`;
+  } else if (draw) {
+    status = "DRAW!";
+  } else {
+    status = (xIsNext ? "X" : "O") + " Gerak";
+  }
 
   return (
     <div className="papan">
@@ -77,6 +118,11 @@ function Papan({ kotaks, xIsNext, onPlay }) {
           <Kotak value={kotaks[7]} onClickBtn={() => handleClick(7)} />
           <Kotak value={kotaks[8]} onClickBtn={() => handleClick(8)} />
         </div>
+      </div>
+      <div className="papan-skor">
+        <span className="skor x">X: {skorX}</span>
+        <span>Vs</span>
+        <span className="skor o">O: {skorO}</span>
       </div>
     </div>
   );
