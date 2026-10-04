@@ -1,0 +1,82 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #192a32;
+}
+
+.game {
+  display: flex;
+  gap: 100px;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+/* game-papan */
+.papan {
+  text-align: center;
+  font-size: 30px;
+}
+.papan-status {
+  margin-bottom: 100px;
+}
+.papan span {
+  padding: 10px;
+  background-color: #1f3540;
+  color: #a8bec9;
+  border: 0;
+  border-radius: 10%;
+  box-shadow: 0px 10px #102129;
+}
+.baris {
+  display: flex;
+}
+.tombol {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  font-size: 50px;
+  background-color: #1f3540;
+  color: #31c3be;
+  border: 0;
+  border-radius: 10%;
+  box-shadow: 0px 10px #102129;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tombol.o {
+  color: #f2b237;
+}
+
+.tombol:active {
+  box-shadow: 0px 0px;
+  transform: translateY(4px);
+}
+
+/* game-history */
+.game-history {
+  color: #a8bec9;
+  font-size: 30px;
+  max-height: 500px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.game-history ol li button {
+  margin-top: 20px;
+  font-size: inherit;
+  color: inherit;
+  background-color: #1f3540;
+  border: 0;
+  border-radius: 10%;
+  box-shadow: 0px 10px #102129;
+  padding: 10px;
+}
+
+.game-history ol li button:active {
+  box-shadow: 0px 0px;
+  transform: translateY(4px);
+}
