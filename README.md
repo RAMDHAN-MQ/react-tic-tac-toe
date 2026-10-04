@@ -1,4 +1,6 @@
+<p align="center">
 ![Tic Tac Toe](https://github.com/RAMDHAN-MQ/react-tic-tac-toe/blob/09d09e4f858b58fc2dec1b4140cb151f23bcd9df/public/image1.png)
+</p>
 
 # TIC TAC TOE
 
